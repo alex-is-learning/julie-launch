@@ -154,7 +154,7 @@ footer{animation-delay:.48s}
 <header>
   <div class="eyebrow">For Julie · from Alex</div>
   <h1>The launch list — <em>small steps, real clients</em></h1>
-  <p class="intro">Everything we talked about, in order of payoff. Tick things off as you go — it saves automatically (in this browser). Two things this week is plenty; the rest can wait their turn.</p>
+  <p class="intro">Everything we talked about, in order of payoff. Tick things off as you go — it saves automatically, whatever device you're on. Two things this week is plenty; the rest can wait their turn.</p>
   <div class="progress">
     <div class="bar"><i id="barfill"></i></div>
     <span class="count" id="count">0 of 0</span>
@@ -362,6 +362,8 @@ footer{animation-delay:.48s}
 
 <script>
 const KEY='julie-launch-v1';
+const SB='https://qqxmjkznwppmnpdanfjw.supabase.co/rest/v1/julie_ticks';
+const SBK='sb_publishable_chr0eZJe5xoMqj93EstbRw_vlFJMUCn';
 const state=JSON.parse(localStorage.getItem(KEY)||'{}');
 const items=[...document.querySelectorAll('.item')];
 const fill=document.getElementById('barfill');
@@ -382,12 +384,36 @@ function render(){
   for(const [n,m] of CHEERS) if(done>=n) msg=m;
   cheer.textContent=msg;
 }
+function push(id){
+  fetch(SB,{
+    method:'POST',
+    headers:{apikey:SBK,'Content-Type':'application/json',Prefer:'resolution=merge-duplicates'},
+    body:JSON.stringify([{id:id,done:!!state[id]}])
+  }).catch(()=>{});
+}
+async function pull(){
+  try{
+    const r=await fetch(SB+'?select=id,done',{headers:{apikey:SBK}});
+    if(!r.ok)return;
+    const rows=await r.json();
+    const server={};
+    rows.forEach(x=>{server[x.id]=x.done});
+    items.forEach(el=>{
+      const id=el.dataset.id;
+      if(id in server){state[id]=server[id]}
+      else if(state[id]){push(id)}
+    });
+    localStorage.setItem(KEY,JSON.stringify(state));
+    render();
+  }catch(e){}
+}
 items.forEach(el=>{
   el.querySelector('.item-row').addEventListener('click',e=>{
     if(e.target.closest('a')||e.target.closest('details'))return;
     const id=el.dataset.id;
     state[id]=!state[id];
     localStorage.setItem(KEY,JSON.stringify(state));
+    push(id);
     if(state[id]){
       const b=el.querySelector('.box').getBoundingClientRect();
       const s=document.createElement('span');
@@ -400,6 +426,8 @@ items.forEach(el=>{
   });
 });
 render();
+pull();
+setInterval(pull,60000);
 </script>
 </body>
 </html>
