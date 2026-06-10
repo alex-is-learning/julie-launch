@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Julie's launch list</title>
+<meta name="description" content="A small, calm checklist for launching Julie's practice." />
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#faf6ef;
+  --ink:#3d3528;
+  --ink-soft:#7a7060;
+  --sage:#8a9b7e;
+  --sage-deep:#5f7355;
+  --terracotta:#c4744d;
+  --terracotta-soft:#e8c9b4;
+  --card:#fffdf8;
+  --line:#e7dfd0;
+  --done:#b9b0a0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Karla',sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.55;
+  background-image:radial-gradient(ellipse 80% 50% at 50% -10%, #f3ead9 0%, transparent 60%);
+  min-height:100vh;
+}
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;opacity:.35;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.24 0 0 0 0 0.21 0 0 0 0 0.16 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.wrap{max-width:680px;margin:0 auto;padding:56px 22px 120px;position:relative;z-index:1}
+
+header{margin-bottom:40px}
+.eyebrow{
+  font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--terracotta);font-weight:700;margin-bottom:14px;
+}
+h1{
+  font-family:'Fraunces',serif;font-weight:500;font-size:clamp(34px,7vw,48px);
+  line-height:1.1;letter-spacing:-.01em;margin-bottom:18px;
+}
+h1 em{font-style:italic;color:var(--sage-deep)}
+.intro{color:var(--ink-soft);font-size:17px;max-width:54ch}
+
+.progress{
+  margin:34px 0 0;padding:18px 20px;background:var(--card);
+  border:1px solid var(--line);border-radius:14px;
+  display:flex;align-items:center;gap:16px;
+}
+.bar{flex:1;height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar i{
+  display:block;height:100%;width:0%;border-radius:99px;
+  background:linear-gradient(90deg,var(--sage),var(--sage-deep));
+  transition:width .6s cubic-bezier(.22,1,.36,1);
+}
+.count{font-weight:700;font-size:14px;color:var(--sage-deep);white-space:nowrap}
+.cheer{font-size:14px;color:var(--ink-soft);font-style:italic;white-space:nowrap}
+
+section{margin-top:48px}
+.section-head{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+h2{
+  font-family:'Fraunces',serif;font-weight:600;font-size:24px;letter-spacing:-.01em;
+}
+.section-sub{color:var(--ink-soft);font-size:15px;margin-bottom:18px}
+.spotlight h2{color:var(--terracotta)}
+.spotlight .item{border-color:var(--terracotta-soft);box-shadow:0 2px 14px rgba(196,116,77,.07)}
+
+.item{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  margin-bottom:12px;transition:opacity .4s,transform .4s;
+}
+.item-row{display:flex;gap:14px;padding:18px 18px 16px;align-items:flex-start;cursor:pointer}
+.box{
+  flex:none;width:28px;height:28px;margin-top:1px;border-radius:9px;
+  border:2px solid var(--sage);background:transparent;cursor:pointer;
+  display:grid;place-items:center;transition:background .2s,border-color .2s,transform .15s;
+}
+.box:active{transform:scale(.88)}
+.box svg{width:16px;height:16px;stroke:#fff;stroke-width:3;fill:none;stroke-dasharray:24;stroke-dashoffset:24;transition:stroke-dashoffset .35s ease .05s}
+.item.done .box{background:var(--sage);border-color:var(--sage)}
+.item.done .box svg{stroke-dashoffset:0}
+.item.done{opacity:.55}
+.item.done .title{text-decoration:line-through;text-decoration-color:var(--done);text-decoration-thickness:1.5px}
+.item-main{flex:1;min-width:0}
+.title{font-weight:700;font-size:17px}
+.why{color:var(--ink-soft);font-size:15px;margin-top:3px}
+.chip{
+  display:inline-block;font-size:12px;font-weight:700;letter-spacing:.04em;
+  color:var(--sage-deep);background:#eef0e7;border-radius:99px;
+  padding:2px 10px;margin-left:8px;vertical-align:2px;white-space:nowrap;
+}
+.chip.cost{color:var(--terracotta);background:#f7e8dd}
+
+details{border-top:1px dashed var(--line);margin:0 18px}
+details summary{
+  list-style:none;cursor:pointer;padding:11px 0;font-size:14px;font-weight:700;
+  color:var(--sage-deep);display:flex;align-items:center;gap:7px;user-select:none;
+}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:'→';transition:transform .25s;display:inline-block}
+details[open] summary::before{transform:rotate(90deg)}
+.how{padding:2px 0 18px;font-size:15px;color:var(--ink)}
+.how p{margin-bottom:10px}
+.how ol,.how ul{margin:0 0 10px 20px}
+.how li{margin-bottom:6px}
+.how a{color:var(--terracotta);font-weight:700;text-decoration-thickness:1.5px;text-underline-offset:2px}
+.how .copyme{
+  background:#f4efe4;border:1px solid var(--line);border-radius:10px;
+  padding:12px 14px;font-style:italic;color:var(--ink);margin:10px 0;
+}
+
+.alex-list{list-style:none}
+.alex-list li{
+  display:flex;gap:10px;padding:10px 4px;border-bottom:1px dashed var(--line);
+  color:var(--ink-soft);font-size:15px;
+}
+.alex-list li::before{content:'☀';color:var(--terracotta);flex:none}
+.alex-list li.donex{color:var(--done)}
+.alex-list li.donex::before{content:'✓';color:var(--sage)}
+
+footer{
+  margin-top:64px;text-align:center;color:var(--ink-soft);font-size:14px;font-style:italic;
+}
+
+.bloom{position:fixed;pointer-events:none;font-size:22px;animation:bloom 1s ease-out forwards;z-index:99}
+@keyframes bloom{
+  0%{transform:translate(-50%,-50%) scale(.4);opacity:0}
+  25%{opacity:1}
+  100%{transform:translate(-50%,-140%) scale(1.15);opacity:0}
+}
+
+header,.progress,section,footer{animation:rise .7s cubic-bezier(.22,1,.36,1) both}
+.progress{animation-delay:.08s}
+section:nth-of-type(1){animation-delay:.16s}
+section:nth-of-type(2){animation-delay:.24s}
+section:nth-of-type(3){animation-delay:.32s}
+section:nth-of-type(4){animation-delay:.4s}
+footer{animation-delay:.48s}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">For Julie · from Alex</div>
+  <h1>The launch list — <em>small steps, real clients</em></h1>
+  <p class="intro">Everything we talked about, in order of payoff. Tick things off as you go — it saves automatically (in this browser). Two things this week is plenty; the rest can wait their turn.</p>
+  <div class="progress">
+    <div class="bar"><i id="barfill"></i></div>
+    <span class="count" id="count">0 of 0</span>
+    <span class="cheer" id="cheer"></span>
+  </div>
+</header>
+
+<section class="spotlight" id="now">
+  <div class="section-head"><h2>This week — three small things</h2></div>
+  <p class="section-sub">Alex has already started sending people to your site. These three make sure they actually book.</p>
+
+  <div class="item" data-id="booking">
+    <div class="item-row">
+      <button class="box" aria-label="mark done"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg></button>
+      <div class="item-main">
+        <div class="title">Put a booking link on the site <span class="chip">~1 hr with Claude</span></div>
+        <div class="why">Right now people have to email and wait. A "book a free intro call" button catches them while the impulse is alive.</div>
+      </div>
+    </div>
+    <details>
+      <summary>exactly how</summary>
+      <div class="how">
+        <p>Use <a href="https://cal.com" target="_blank" rel="noopener">Cal.com</a> (free plan allows multiple event types — Calendly's free plan only allows one).</p>
+        <ol>
+          <li>Create two event types: <strong>Intro call — 20 min, free</strong> and <strong>Online session — 60 min</strong>. Both get a video link automatically.</li>
+          <li>For in-person sessions, don't make them instantly bookable (you need to book the room) — leave those as "contact me" or use a request-type booking you confirm.</li>
+          <li>Connect your <strong>Google Calendar</strong> — busy times block automatically, so you never have to update availability by hand. Your Philippines/Vietnam trip handles itself: just block it in Google Calendar.</li>
+          <li>Turn on a <strong>15–30 min buffer</strong> between sessions and <strong>24h minimum notice</strong>.</li>
+          <li>Then tell Claude, on your website code:</li>
+        </ol>
+        <p class="copyme">"Replace the contact email CTA with a link to [your cal.com URL]. Button text: 'Book a free 20-min intro call'."</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="item" data-id="founding-price">
+    <div class="item-row">
+      <button class="box" aria-label="mark done"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg></button>
+      <div class="item-main">
+        <div class="title">Put your founding-client deal on the site, near the top <span class="chip">~20 min</span></div>
+        <div class="why">"Start now, keep this price after I qualify" is the single strongest reason to book today instead of someday — and right now it isn't on the site at all.</div>
+      </div>
+    </div>
+    <details>
+      <summary>exactly how</summary>
+      <div class="how">
+        <p>Don't frame it as a student discount (sounds like lower quality). Frame it as <strong>founding-client pricing</strong> — something like:</p>
+        <p class="copyme">"Founding clients: 400 DKK per session — about a third of the usual Copenhagen rate — and you keep this price permanently after I qualify."</p>
+        <p>Put it in the Services section right next to the price, and ideally a short line in the hero too. Tell Claude to add it.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="item" data-id="currency">
+    <div class="item-row">
+      <button class="box" aria-label="mark done"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg></button>
+      <div class="item-main">
+        <div class="title">Show $ and € next to the price <span class="chip">~10 min</span></div>
+        <div class="why">Most people seeing "400 DKK" have no idea what that is — and bounce rather than open a currency converter.</div>
+      </div>
+    </div>
+    <details>
+      <summary>exactly how</summary>
+      <div class="how">
+        <p>Wherever the price appears, make it:</p>
+        <p class="copyme">"400 DKK (~$60 / €54) · 60 min"</p>
+        <p>One line to Claude on the website code. Approximate is fine — the point is that an American or international visitor instantly knows the ballpark.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section id="bigwins">
+  <div class="section-head"><h2>Big wins — this month</h2></div>
+  <p class="section-sub">Free listings where people are already searching for exactly you.</p>
+
+  <div class="item" data-id="gbp">
+    <div class="item-row">
+      <button class="box" aria-label="mark done"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg></button>
+      <div class="item-main">
+        <div class="title">Google Business Profile <span class="chip">~30 min · free</span></div>
+        <div class="why">Puts you on Google Maps for "english speaking therapist copenhagen" — the highest-intent search there is, free.</div>
+      </div>
+    </div>
+    <details>
+      <summary>exactly how</summary>
+      <div class="how">
+        <ol>
+          <li>Go to <a href="https://business.google.com" target="_blank" rel="noopener">business.google.com</a> and create a profile for your consulting room address (a rented room you actually work in qualifies — Google's restriction is only on mail-drop addresses). Your name should be visible at the location, even a small sign.</li>
+          <li>Verification arrives by postcard in 1–2 weeks.</li>
+          <li>Add a photo, hours, and a short bio in English <em>and</em> Danish — name your areas (existential, somatic, trauma, relationships) and the free intro call.</li>
+          <li>When your first clients are happy, ask them for a Google review — even 3 reviews lifts you above most listings.</li>
+        </ol>
+      </div>
+    </details>
+  </div>
+
+  <div class="item" data-id="itscomplicated">
+    <div class="item-row">
+      <button class="box" aria-label="mark done"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg></button>
+      <div class="item-main">
+        <div class="title">Apply to It's Complicated <span class="chip">~45 min</span></div>
+        <div class="why">The platform English-speakers in Copenhagen actually use to find therapists — founded in Copenhagen, and they accept therapists in training.</div>
+      </div>
+    </div>
+    <details>
+      <summary>exactly how</summary>
+      <div class="how">
+        <p>Apply at <a href="https://complicated.life" target="_blank" rel="noopener">complicated.life</a>. There's a live Copenhagen profile that says <em>"I'm a psychotherapist in training offering therapy at a reduced price, while finishing the last year of my psychotherapy studies"</em> — your exact situation, already accepted.</p>
+        <ul>
+          <li>Lead your bio with the founding-client rate and the free intro call.</li>
+          <li>They like to see ~1 year of client-facing experience — your supervised training hours count.</li>
+        </ul>
+      </div>
+    </details>
+  </div>
+
+  <div class="item" data-id="therapyroute">
+    <div class="item-row">
+      <button class="box" aria-label="mark done"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg></button>
+      <div class="item-main">
+        <div class="title">TherapyRoute free listing <span class="chip">~20 min · free</span></div>
+        <div class="why">Only about 11 therapists listed in all of Copenhagen — near-zero competition, no credential gate, free tier.</div>
+      </div>
+    </div>
+    <details>
+      <summary>exactly how</summary>
+      <div class="how">
+        <p>Sign up at <a href="https://www.therapyroute.com/choose-your-plan" target="_blank" rel="noopener">therapyroute.com</a> — the free tier includes up to 12 client contacts a year. Reuse the same bio you write for It's Complicated.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section id="later">
+  <div class="section-head"><h2>When those are done</h2></div>
+  <p class="section-sub">Good moves, no rush. Ignore this section until the ones above are ticked.</p>
+
+  <div class="item" data-id="dpfo">
+    <div class="item-row">
+      <button class="box" aria-label="mark done"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg></button>
+      <div class="item-main">
+        <div class="title">DPFO student membership <span class="chip cost">67 DKK/mo</span></div>
+        <div class="why">Denmark's main psychotherapy association — and possibly a listing in their public "find a therapist" directory.</div>
+      </div>
+    </div>
+    <details>
+      <summary>exactly how</summary>
+      <div class="how">
+        <p>Join via <a href="https://psykoterapeutforeningen.dk/medlemskab" target="_blank" rel="noopener">psykoterapeutforeningen.dk</a> (you may already be eligible through SEOP — or already a member?). Email <a href="mailto:kontakt@dpfo.dk">kontakt@dpfo.dk</a> and ask whether student members appear in the public directory. Membership also helps with the Psychology Today verification below.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="item" data-id="psychtoday">
+    <div class="item-row">
+      <button class="box" aria-label="mark done"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg></button>
+      <div class="item-main">
+        <div class="title">Psychology Today Denmark <span class="chip cost">150 DKK/mo</span></div>
+        <div class="why">The biggest therapy directory brand. Worth it once DPFO membership is sorted (they verify via association membership).</div>
+      </div>
+    </div>
+    <details>
+      <summary>exactly how</summary>
+      <div class="how">
+        <p>Sign up at <a href="https://join.psychologytoday.com/en-dk/signup" target="_blank" rel="noopener">psychologytoday.com (Denmark)</a> — cancel anytime. The headline + first two sentences do most of the work: speak to how the person feels, not your method list, then name the founding-client rate. Tick both the <strong>somatic</strong> and <strong>existential/humanistic</strong> filters.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="item" data-id="seop">
+    <div class="item-row">
+      <button class="box" aria-label="mark done"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg></button>
+      <div class="item-main">
+        <div class="title">Ask SEOP about referrals <span class="chip">one email</span></div>
+        <div class="why">Training institutes often have waiting lists or trainee referral schemes — one email to find out.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="item" data-id="adfriend">
+    <div class="item-row">
+      <button class="box" aria-label="mark done"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-11"/></svg></button>
+      <div class="item-main">
+        <div class="title">Coffee with your advertising friend <span class="chip">when it suits</span></div>
+        <div class="why">You mentioned him on our call — free expert eyes on all of this.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="alex">
+  <div class="section-head"><h2>Meanwhile, Alex is on…</h2></div>
+  <p class="section-sub">So you know what's covered. One thing I need from you is in here.</p>
+  <ul class="alex-list">
+    <li class="donex">Personal recommendations to friends who'd be a good fit — first four sent</li>
+    <li>Posting a recommendation in Copenhagen expat Facebook groups — <strong>need from you: which group(s) did you already post in?</strong> So I hit new ones.</li>
+    <li>A recommendation post on r/copenhagen</li>
+    <li>Keeping this page updated as things land</li>
+  </ul>
+</section>
+
+<footer>One tick at a time. — Alex ☀</footer>
+</div>
+
+<script>
+const KEY='julie-launch-v1';
+const state=JSON.parse(localStorage.getItem(KEY)||'{}');
+const items=[...document.querySelectorAll('.item')];
+const fill=document.getElementById('barfill');
+const count=document.getElementById('count');
+const cheer=document.getElementById('cheer');
+const CHEERS=[[0,'— begin anywhere'],[1,'lovely start'],[3,'real momentum'],[5,'more than halfway'],[8,'nearly there'],[items.length,'all done — celebrate ✨']];
+
+function render(){
+  let done=0;
+  items.forEach(el=>{
+    const on=!!state[el.dataset.id];
+    el.classList.toggle('done',on);
+    if(on)done++;
+  });
+  fill.style.width=(done/items.length*100)+'%';
+  count.textContent=done+' of '+items.length;
+  let msg='';
+  for(const [n,m] of CHEERS) if(done>=n) msg=m;
+  cheer.textContent=msg;
+}
+items.forEach(el=>{
+  el.querySelector('.item-row').addEventListener('click',e=>{
+    if(e.target.closest('a')||e.target.closest('details'))return;
+    const id=el.dataset.id;
+    state[id]=!state[id];
+    localStorage.setItem(KEY,JSON.stringify(state));
+    if(state[id]){
+      const b=el.querySelector('.box').getBoundingClientRect();
+      const s=document.createElement('span');
+      s.className='bloom';s.textContent='🌱';
+      s.style.left=(b.left+b.width/2)+'px';s.style.top=b.top+'px';
+      document.body.appendChild(s);
+      setTimeout(()=>s.remove(),1000);
+    }
+    render();
+  });
+});
+render();
+</script>
+</body>
+</html>
